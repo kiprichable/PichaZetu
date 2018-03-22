@@ -8,7 +8,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="col-lg-12 col-md-offset-1">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 
@@ -62,7 +62,7 @@
 									<div class="tab-pane fade in active edit_profile">
 
 										<div class="row">
-											<div class="col-sm-12">
+											<div class="col-lg-12">
 												<div id="avatar_container">
 													<div class="collapseOne panel-collapse collapse @if($user->profile->avatar_status == 0) in @endif">
 														<div class="panel-body">
@@ -109,8 +109,8 @@
 
 
 											<div class="form-group has-feedback {{ $errors->has('theme') ? ' has-error ' : '' }}">
-												{!! Form::label('theme', trans('profile.label-theme') , array('class' => 'col-sm-4 control-label')); !!}
-												<div class="col-sm-6">
+												{!! Form::label('theme', trans('profile.label-theme') , array('class' => 'col-sm-4 control-label')) !!}
+												<div class="col-lg-6">
 
 													<select class="form-control" name="theme_id" id="theme_id">
 														@if ($themes->count())
@@ -538,6 +538,14 @@
 		    }
 		}
 
+	</script>
+
+	<script>
+        var edit = CKEDITOR.instances.bio;
+        if (!edit)
+        {
+            CKEDITOR.replace('bio');
+        }
 	</script>
 
 @endsection

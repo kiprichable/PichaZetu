@@ -1,5 +1,3 @@
-{{--@extends('layouts.app')--}}
-{{--@section('content')--}}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,59 +41,8 @@
 </section>
 <!-- intro end-->
 <!-- navbar-->
-<header class="header">
-    <div class="sticky-wrapper">
-        <div role="navigation" class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-btn btn-sm navbar-toggle">
-                        <span class="icon-bar"></span><span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="#intro" class="navbar-brand scroll-to" style="margin-top: 5%">{{ $user->name }}'s
-                        Photography</a>
-                </div>
-                <div  class="collapse navbar-collapse navbar-right">
-                    <ul id="navigation" class="nav navbar-nav">
-                        <li class="active"><a href="#intro">Home</a></li>
-                        <li><a href="#about">About </a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#text">Blog</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        @if (Auth::guest())
-                            <li><a href="{{ URL::Asset('login') }}">{!! trans('titles.login') !!}</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+@include('partials.header')
 
-                                <ul class="dropdown-menu" role="menu">
-
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 <!-- /.navbar-->
 <!-- about-->
 
@@ -320,10 +267,10 @@
     <div class="container">
         <div class="row copyright">
             <div class="col-md-6">
-                <p>&copy;2015 Your name/company goes here</p>
+                <p>&copy;{!! date('Y') !!} {!! $user->name !!}</p>
             </div>
             <div class="col-md-6">
-                <p class="credit">Template by <a href="http://bootstrapious.com/landing-pages">Bootstrapious &mdash; Bootstrap Landing Pages</a></p>
+                <p class="credit">Powered by picha sell - <a href="">Privacy Policy</a></p>
                 <!-- Please do not remove the backlink to us. It is part of the licence conditions. Thanks for understanding :)
                 -->
             </div>

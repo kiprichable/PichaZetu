@@ -59,6 +59,9 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep']], fun
         'as'   => '{username}',
         'uses' => 'ProfilesController@show',
     ]);
+	
+	Route::resource('photos', 'photoController');
+	Route::resource('albums', 'albumController');
 });
 
 // Registered, activated, and is current user routes.
