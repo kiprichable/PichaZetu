@@ -18,6 +18,7 @@ Route::get('/', 'WelcomeController@welcome')->name('welcome');
 Route::get('/user/{username}', 'WelcomeController@show')->name('welcome');
 Route::post('/contactus/{username}', 'ContactUsController@store');
 Route::resource('contactus', 'ContactUsController');
+Route::get('albums/{id}', 'albumController@show');
 
 // Authentication Routes
 Auth::routes();
@@ -61,7 +62,11 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep']], fun
     ]);
 	
 	Route::resource('photos', 'photoController');
-	Route::resource('albums', 'albumController');
+	Route::resource('albums', 'albumController',
+		[
+			'only' => ['index','edit','update','create']
+		]
+	);
 });
 
 // Registered, activated, and is current user routes.

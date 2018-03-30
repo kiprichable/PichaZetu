@@ -8,8 +8,11 @@
                         <span class="icon-bar"></span>
                     </button>
                     @if (!Auth::guest())
-                    <a href="#intro" class="navbar-brand scroll-to" style="margin-top: 5%">{{ Auth::User()->name }}'s
-                        Photography</a>
+                    <a href="{{URL::Asset('user/'. Auth::User()->name)}}" class="navbar-brand scroll-to" style="margin-top: 5%">{{  Auth::User()->name }}'sPhotography</a>
+                    @elseif(\Request::is('login'))
+
+                    @else
+                        <a href="{{URL::Asset('user/'. $user->name )}}" class="navbar-brand scroll-to" style="margin-top: 5%">{{ $user->name}}'s Photography</a>
                     @endif
                 </div>
                 <div  class="collapse navbar-collapse navbar-right">

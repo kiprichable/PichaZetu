@@ -12,4 +12,11 @@ class Album extends Model
 	{
 		return $this->hasMany('App\Models\Photo');
 	}
+	
+	public function photographer($id)
+	{
+		return User::where('id',Album::find($id)['photographer_id'])->first();
+	}
+	
+	
 }

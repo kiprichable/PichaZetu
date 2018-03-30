@@ -1,16 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @if(Session::has('Success'))
-        <div class="alert alert-success" role="alert">
-            <strong>{{Session::get('Success')}} </strong>
-        </div>
-    @endif
-    @if(Session::has('Error'))
-        <div class="alert alert-danger" role="alert">
-            <strong> {{Session::get('Error')}} </strong>
-        </div>
-    @endif
-    <div class="container" style="margin-top:10%">
+    <div class="container">
         <div class="centered-form">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -18,15 +8,6 @@
                         <h3 class="panel-title">Create a new album <small>and upload photos!</small></h3>
                     </div>
                     <div class="panel-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                        {{Form::open(['url' => 'albums', 'method' => 'POST', 'files' =>  'true'])}}
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">

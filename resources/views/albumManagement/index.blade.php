@@ -1,15 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    @if(Session::has('Success'))
-        <div class="alert alert-success" role="alert">
-            <strong>{{Session::get('Success')}} </strong>
-        </div>
-    @endif
-    @if(Session::has('Error'))
-        <div class="alert alert-danger" role="alert">
-            <strong> {{Session::get('Error')}} </strong>
-        </div>
-    @endif
     <div class="container">
         <div class="well well-sm">
             <strong>Albums</strong>

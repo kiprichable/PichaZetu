@@ -86,8 +86,11 @@
 		 */
 		public function show($id)
 		{
+			$album = Album::find($id);
+			
 			return view('albumManagement.show')
-				->withAlbum(Album::find($id));
+				->withAlbum($album)
+				->withUser($album->photographer($id));
 		}
 		
 		/**
@@ -111,7 +114,10 @@
 		 */
 		public function update(Request $request, $id)
 		{
-			//
+			//dd($request->input());
+			Session::flash('success','Album updated successfully');
+			//redirect to all albums
+			return redirect('albums');
 		}
 		
 		/**
@@ -138,7 +144,7 @@
 			//delete the album
 			Album::find($id)->delete();
 			//flash message
-			Session::flash('Success','Album deleted successfully');
+			Session::flash('success','Album deleted successfully');
 			//redirect to all albums
 			return redirect('albums');
 		}
@@ -151,7 +157,6 @@
 		{
 			$img = Image::make ($img);
 			$img->save ('OriginalImages/' . $path);
-			Session::flash ('Success', 'Original images saved.');
 			
 		}
 		
@@ -179,8 +184,5 @@
 			}
 			
 			$img->save ('WatermarkedImages/' . $path);
-			
-			
-			Session::flash ('Success', 'Watermarked images saved.');
 		}
 	}

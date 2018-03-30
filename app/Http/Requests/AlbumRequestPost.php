@@ -27,14 +27,17 @@ class AlbumRequestPost extends FormRequest
 				'name' => 'required',
 				'description' => 'required|max:50',
         ];
-    	
+	
+		if($this->file('photos'))
+		{
 		$photos = count($this->file('photos'));
 		
-		foreach(range(0, $photos) as $index)
-		{
-			$rules['photos.' . $index] = 'image|mimes:jpeg,jpg,bmp,png|max:100000000';
+			foreach(range(0, $photos) as $index)
+			{
+				$rules['photos.' . $index] = 'image|mimes:jpeg,jpg,bmp,png|max:100000000';
+			}
+			
 		}
-	
 		return $rules;
     }
 }

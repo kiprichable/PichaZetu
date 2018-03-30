@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    @if (Auth::guest())
-    <title>{{ $user->name }}</title>
+    @if (!Auth::guest())
+    <title>{{ Auth::user()->name }}</title>
     @else
         <title>@if (trim($__env->yieldContent('template_title')))@yield('template_title') | @endif {{ config('app.name', Lang::get('titles.app')) }}</title>
     @endif
@@ -43,28 +43,30 @@
 <div id="app">
     <div class="container">
         @include('partials.form-status')
-
     </div>
     @yield('content')
 
 </div>
 
 {{-- Scripts --}}
-{{--<script src="{{ URL::Asset('js/app.js') }}"></script>--}}
-<script src='{{URL::Asset('js/gallery.js')}}'></script>
+<script src="{{ URL::Asset('js/app.js') }}"></script>
+<script src='{{URL::Asset('/js/gallery.js')}}'></script>
 <script src="{{URL::Asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
 <script src="{{URL::Asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')}}"></script>
-{{--@if(config('settings.googleMapsAPIStatus'))--}}
-    {{--{!! HTML::script('//maps.googleapis.com/maps/api/js?key='.env("GOOGLEMAPS_API_KEY").'&libraries=places&dummy=.js', array('type' => 'text/javascript')) !!}--}}
-{{--@endif--}}
+@if(config('settings.googleMapsAPIStatus'))
+    {!! HTML::script('//maps.googleapis.com/maps/api/js?key='.env("GOOGLEMAPS_API_KEY").'&libraries=places&dummy=.js', array('type' => 'text/javascript')) !!}
+@endif
 
-{{--@yield('footer_scripts')--}}
-{{--<script>--}}
-    {{--var edit = CKEDITOR.instances.bio;--}}
-    {{--if (!edit)--}}
-    {{--{--}}
-        {{--CKEDITOR.replace('bio');--}}
-    {{--}--}}
-{{--</script>--}}
+@yield('footer_scripts')
+
+@if(Auth::User())
+<script>
+    var edit = CKEDITOR.instances.bio;
+    if (!edit)
+    {
+        CKEDITOR.replace('bio');
+    }
+</script>
+@endif
 </body>
 </html>

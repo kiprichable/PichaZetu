@@ -52,11 +52,16 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ route('login') }}">Login</a></li>
                 @else
                     <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle nav-link js-scroll-trigger" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a href="{{ URL::Asset('/profile/'.Auth::user()->name) }}" class="dropdown-toggle nav-link
+                        js-scroll-trigger" data-toggle="dropdown"
+                           role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            <li class="nav_item">
+                                <a href="{{URL::Asset('/profile/'.Auth::user()->name)}}"  class="nav-link js-scroll-trigger">Profile</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('logout') }}" class="nav-link js-scroll-trigger"
                                    onclick="event.preventDefault();

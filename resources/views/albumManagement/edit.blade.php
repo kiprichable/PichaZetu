@@ -1,16 +1,38 @@
 @extends('layouts.app')
 @section('content')
-    @if(Session::has('Success'))
-        <div class="alert alert-success" role="alert">
-            <strong>{{Session::get('Success')}} </strong>
-        </div>
-    @endif
-    @if(Session::has('Error'))
-        <div class="alert alert-danger" role="alert">
-            <strong> {{Session::get('Error')}} </strong>
-        </div>
-    @endif
-    <div class="container" style="margin-top:10%">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <style>
+        .nopad {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        /*image gallery*/
+        .image-checkbox {
+            cursor: pointer;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+        .image-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .image-checkbox-checked {
+            border-color: #b0131d;
+        }
+        .image-checkbox .fa {
+            position: absolute;
+            color: #a30915;
+            background-color: #fff;
+            padding: 0%;
+            top: 0;
+            right: 0;
+        }
+        .image-checkbox-checked .fa {
+            display: block !important;
+        }
+    </style>
+    <div class="container">
         <div class="page-header">
             <a href={{URL::asset('albums/'.$album['id'])}}>&laquo; Back to Album</a>
         </div>
@@ -46,13 +68,19 @@
                         <div class="tz-gallery">
 
                             <div class="row">
+
                                 @foreach($album->photos()->get() as $photo)
-                                    <div class="col-sm-6 col-md-4">
-                                        <a class="lightbox" href="{{URL::Asset('/').$photo->watermarked.'/'.$photo->name}}">
-                                            <img src="{{URL::Asset('/').$photo->watermarked.'/'.$photo->name}}" alt="watermarked">
-                                        </a>
+                                    <div class="col-lg-6 nopad text-center">
+                                        <label class="image-checkbox">
+                                            <img class="image-responsive lightbox" src="{{URL::Asset('/')
+                                            .$photo->watermarked.'/'
+                                            .$photo->name}}" alt="watermarked" height="200" height="200">
+                                           <input type="checkbox" name="image[]" value="{!! $photo->id !!}" />
+                                            <i class="fa fa-check hidden" style="margin-right: 15%"></i>
+                                        </label>
                                     </div>
                                 @endforeach
+
                             </div>
 
                         </div>
@@ -64,4 +92,25 @@
             </div>
         </div>
     </div>
+    <script>
+        // image gallery
+        // init the state from the input
+        $(".image-checkbox").each(function () {
+            if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+                $(this).addClass('image-checkbox-checked');
+            }
+            else {
+                $(this).removeClass('image-checkbox-checked');
+            }
+        });
+
+        // sync the state to the input
+        $(".image-checkbox").on("click", function (e) {
+            $(this).toggleClass('image-checkbox-checked');
+            var $checkbox = $(this).find('input[type="checkbox"]');
+            $checkbox.prop("checked",!$checkbox.prop("checked"))
+
+            e.preventDefault();
+        });
+    </script>
 @stop

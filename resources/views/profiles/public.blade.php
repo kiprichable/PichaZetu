@@ -294,6 +294,7 @@
 <script src="{{URL::Asset('/vendor/unisharp/laravel-ckeditor/adapters/jquery.js')}}"></script>
 
 {{--@push('scripts')--}}
+@if(Auth::User())
 <script>
     var edit = CKEDITOR.instances.editor;
     if (!edit)
@@ -302,6 +303,7 @@
         CKEDITOR.replace('bio');
     }
 </script>
+@endif
 {{--@endpush--}}
 </body>
 </html>
