@@ -24,21 +24,24 @@
 </head>
 <body data-spy="scroll" data-target="#navigation" data-offset="120">
 <!-- intro-->
-<section id="intro" style="background-image: url('{{URL::Asset('img/photo.jpeg')}}');" class="intro">
-    <div class="overlay"></div>
-    <div class="content">
-        <div class="container clearfix">
-            @include('partials.form-status')
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-sm-12">
-                    <p class="italic">Hello, My name is {{ $user->first_name }}, nice to meet you!</p>
-                    <h1>I am a professional photographer,</h1>
-                    <p class="italic">With a vast experience in Capturing life's Greatest Moments.</p>
+<div class="row">
+    <section id="intro" style="background-image: url('{{URL::Asset('img/photo.png')}}');" class="intro">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="container clearfix">
+                @include('partials.form-status')
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12">
+                        <p class="italic">Hello, My name is {{ $user->first_name }}, nice to meet you!</p>
+                        <h1>I am a professional photographer,</h1>
+                        <p class="italic">With a vast experience in Capturing life's Greatest Moments.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+</div>
 <!-- intro end-->
 <!-- navbar-->
 @include('partials.header')

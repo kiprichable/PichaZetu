@@ -18,7 +18,6 @@ Route::get('/', 'WelcomeController@welcome')->name('welcome');
 Route::get('/user/{username}', 'WelcomeController@show')->name('welcome');
 Route::post('/contactus/{username}', 'ContactUsController@store');
 Route::resource('contactus', 'ContactUsController');
-Route::get('albums/{id}', 'albumController@show');
 
 // Authentication Routes
 Auth::routes();
@@ -137,5 +136,7 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
     Route::get('routes', 'AdminDetailsController@listRoutes');
     Route::get('active-users', 'AdminDetailsController@activeUsers');
 });
+
+Route::get('albums/{id}', 'albumController@show');
 
 Route::redirect('/php', '/phpinfo', 301);

@@ -1,14 +1,12 @@
 @extends('layouts.app')
 @section('content')
-
-	<div class="container">
+	<div class="container" style="margin-top: 5%">
 		<div class="row">
 				<div class="">
 					<div class="">
-						<div class="btn-group pull-right btn-group-xs">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-ellipsis-v fa-fw" aria-hidden="true"></i>
-								<span class="sr-only">{{ trans('profile.editTriggerAlt') }}</span>
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-success" data-toggle="dropdown">
+								User Settings
 							</button>
 
 							<ul class="dropdown-menu">
@@ -534,5 +532,15 @@
 		}
 
 	</script>
+
+	@if(Auth::User())
+		<script>
+            var edit = CKEDITOR.instances.bio;
+            if (!edit)
+            {
+                CKEDITOR.replace('bio');
+            }
+		</script>
+	@endif
 
 @endsection

@@ -147,6 +147,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 		Unisharp\Ckeditor\ServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+		Jenssegers\Agent\AgentServiceProvider::class,
+	
 	
 	
 	
@@ -231,6 +233,7 @@ return [
         'Gravatar'     => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Image'        => Intervention\Image\Facades\Image::class,
         'Uuid'         => Webpatser\Uuid\Uuid::class,
+		'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];

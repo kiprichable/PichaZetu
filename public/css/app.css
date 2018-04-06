@@ -15291,14 +15291,6 @@ div[data-toggle="buttons"] label.active {
   height: 1px;
 }
 
-body {
-  background-image: -webkit-gradient(linear, left bottom, left top, from(#ecedee), color-stop(75%, #eceeef), to(#e7e8e9));
-  background-image: linear-gradient(to top, #ecedee 0%, #eceeef 75%, #e7e8e9 100%);
-  min-height: 100vh;
-  font: normal 16px sans-serif;
-  padding: 60px 0;
-}
-
 .container.gallery-container {
   background-color: #fff;
   color: #35373a;
@@ -15364,44 +15356,6 @@ body {
     color: #0099ff;
     font: 14px/14px Square;
   }
-}
-
-.nopad {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-/*image gallery*/
-
-.image-checkbox {
-  cursor: pointer;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  border: 4px solid transparent;
-  margin-bottom: 0;
-  outline: 0;
-}
-
-.image-checkbox input[type="checkbox"] {
-  display: none;
-}
-
-.image-checkbox-checked {
-  border-color: #4783B0;
-}
-
-.image-checkbox .fa {
-  position: absolute;
-  color: #4A79A3;
-  background-color: #fff;
-  padding: 10px;
-  top: 0;
-  right: 0;
-}
-
-.image-checkbox-checked .fa {
-  display: block !important;
 }
 
 .glyphicon {
