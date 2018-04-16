@@ -177,8 +177,10 @@ return [
         App\Providers\LocalEnvironmentServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         jeremykenedy\laravelexceptionnotifier\LaravelExceptionNotifier::class,
+		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
 
-    ],
+
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -234,6 +236,8 @@ return [
         'Image'        => Intervention\Image\Facades\Image::class,
         'Uuid'         => Webpatser\Uuid\Uuid::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
-    ],
+		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+
+	],
 
 ];

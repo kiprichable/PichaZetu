@@ -21,6 +21,7 @@
         "jeremykenedy/laravel-roles": "^1.1",
         "jeremykenedy/laravel2step": "^1.0",
         "jeremykenedy/uuid": "^3.1",
+        "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
@@ -32,7 +33,9 @@
         "socialiteproviders/instagram": "^3.0",
         "socialiteproviders/twitch": "^3.0",
         "socialiteproviders/youtube": "^3.0",
-        "unisharp/laravel-ckeditor": "^4.6"
+        "unisharp/laravel-ckeditor": "^4.6",
+        "gloudemans/shoppingcart": "^2.3"
+
     },
     "require-dev": {
         "filp/whoops": "~2.0",

@@ -18,6 +18,13 @@ Route::get('/', 'WelcomeController@welcome')->name('welcome');
 Route::get('/user/{username}', 'WelcomeController@show')->name('welcome');
 Route::post('/contactus/{username}', 'ContactUsController@store');
 Route::resource('contactus', 'ContactUsController');
+Route::resource('cart', 'CartController');
+Route::delete('emptyCart', 'CartController@emptyCart');
+Route::post('switchToWishlist/{id}', 'CartController@switchToWishlist');
+
+Route::resource('wishlist', 'WishlistController');
+Route::delete('emptyWishlist', 'WishlistController@emptyWishlist');
+Route::post('switchToCart/{id}', 'WishlistController@switchToCart');
 
 // Authentication Routes
 Auth::routes();

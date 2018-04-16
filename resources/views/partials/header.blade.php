@@ -13,8 +13,7 @@
                     <a href="{{URL::Asset('user/'. Auth::User()->name)}}" class="navbar-brand scroll-to"
                        style="margin-top: 5%">{{  Auth::User()->name }}'s Photography</a>
                     @elseif(\Request::is('login'))
-                       <a href="{!! URL::Asset('/') !!}" class="navbar-brand scroll-to" style="margin-top: 5%;
-                       color: white">Picha Sell</a>
+                       <a href="{!! URL::Asset('/') !!}" class="navbar-brand scroll-to" style="margin-top: 5%; color: white">Picha Sell</a>
                     @else
                         <a href="{{URL::Asset('user/'. $user->name )}}" class="navbar-brand scroll-to"
                            style="margin-top: 5%">{{ $user->name}} 's Photography</a>
@@ -31,6 +30,10 @@
                          @endif
                     </ul>
                     <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="{{ url('/wishlist') }}">Wishlist ({{ Cart::instance('wishlist')->count(false) }})</a></li>
+                            <li><a href="{{ url('/cart') }}">Cart ({{ Cart::instance('default')->count(false) }})</a></li>
+                        </ul>
                         @if (Auth::guest())
                             <li><a href="{{ URL::Asset('login') }}">{!! trans('titles.login') !!}</a></li>
                         @else

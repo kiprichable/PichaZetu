@@ -16,10 +16,11 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('album_id')->references('id')->on('albums');
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('original');
             $table->string('watermarked');
-            $table->char('favorite',2)->nullable();
+            $table->decimal('price',10,2)->nullable();
             $table->string('created_by')->nullable();
             $table->softDeletes('deleted_at')->nullable();
             $table->timestamps();
