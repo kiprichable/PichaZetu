@@ -113,7 +113,14 @@
                                         <input type="submit" class="btn btn-danger" value="Empty Cart">
                                     </form>
                                 </div>
-                                <a href="#" class="btn btn-success">Checkout</a>
+                                {!! Form::open(['url' => 'billing' ,'method' => 'POST']) !!}
+
+                                <input name="stripeToken" id="stripeToken" type="hidden">
+                                <input name="stripeEmail" id="stripeEmail" type="hidden">
+
+                                <button class="btn btn-success" id="checkout">Checkout</button>
+
+                                {!! Form::close() !!}
                             </div>
                         @else
                             <div class="col-lg-12">
@@ -129,8 +136,33 @@
     </section>
     <!-- end container -->
 
-@endsection
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    let stripe = StripeCheckout.configure({
+        key: "{{config('services.stripe.key')}}",
+        image: "https://stripe.com/img/documentation/checkout/marketplace.png",
+        locale: "auto",
+        token: function (token) {
+            document.querySelector('#stripeEmail').value = token.email;
+            document.querySelector('#stripeToken').value = token.id;
+            document.querySelector('#checkout-form');
+        }
+    });
 
+    document.querySelector('#checkout').addEventListener('click', function(e) {
+        stripe.open({
+            name: "Buy Pictures in Cart",
+            description: "Online photo",
+            zipCode: true,
+            billingAddress: true,
+            amount: "{{Cart::total() *100}}",
+
+        });
+
+       // e.preventDefault();
+    });
+</script>
+@endsection
 @section('extra-js')
     <script>
         (function(){
@@ -154,4 +186,6 @@
             });
         })();
     </script>
+
+
 @endsection

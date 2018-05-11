@@ -24,7 +24,7 @@
         return false;
     });
 </script>
-@if(Auth::User())
+@if(Auth::User() && strpos('cart', url()->current()) == '44')
     <script>
         var edit = CKEDITOR.instances.bio;
         if (!edit)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    @if (!Auth::guest())
+    @if (!Auth::guest() && Auth::user()->level() >= 4)
     <title>{{ Auth::user()->name }}</title>
     @else
         <title>@if (trim($__env->yieldContent('template_title')))@yield('template_title') | @endif {{ config('app.name', Lang::get('titles.app')) }}</title>
@@ -39,7 +39,6 @@
 <!-- intro-->
 <!-- intro end-->
 <!-- navbar-->
-@include('partials.page-top')
 @include('partials.header')
 <div id="app">
     <div class="container">

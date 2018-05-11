@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>BIO</h2>
-                @if(Auth::user())
+                @if(Auth::user()->level() >= 4)
                     <div class="form-group">
                         <a class="btn btn-primary btn-block" href="{!! URL::Asset('profile/'.$user->name.'/edit')
                         !!}">Edit Profile</a>
@@ -162,7 +162,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="heading">Blog</h2>
-                @if(Auth::user())
+                @if(Auth::user()->level() >= 4)
                     <div class="form-group col-lg-12">
                         {!! Form::label('Blog Title', 'Title', ['class' => 'control-label']) !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -196,7 +196,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="heading">Contact</h2>
-                @if(Auth::user())
+                @if(Auth::user()->level() >= 4)
                     <div class="row">
                         <p class="lead">Customer Messages</p>
                         <table class="table table-resposive">

@@ -5,20 +5,28 @@
 	use App\Http\Requests\AlbumRequestPost;
 	use App\Models\Album;
 	use App\Models\Photo;
+	use App\Models\User;
 	use App\Repositories\Image\UploadImagesRepositoryInterface;
 	use Carbon\Carbon;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Auth;
+	use function in_array;
 	use Intervention\Image\Facades\Image;
 	use Illuminate\Support\Facades\Session;
+	use Illuminate\Support\Facades\Hash;
+	use App\Traits\ActivationTrait;
+	use jeremykenedy\LaravelRoles\Models\Role;
 	
 	class albumController extends Controller
 	{
+		use ActivationTrait;
 		protected $images;
+		protected $user;
 		
-		public function __construct(UploadImagesRepositoryInterface $images)
+		public function __construct(UploadImagesRepositoryInterface $images, User $user)
 		{
 			$this->images = $images;
+			$this->user = $user;
 		}
 		/**
 		 * Display a listing of the resource.
@@ -27,7 +35,18 @@
 		 */
 		public function index()
 		{
-			return view('albumManagement.index')->withAlbums(Album::all());
+			if(Auth::user()->level() >= 4)
+			{
+				$Album = Album::where('user_id',Auth::user()->id)->get();
+			}
+			else
+			{
+				$Album = Album::where('customer_id',Auth::user()->id)->get();
+			}
+			
+			return view('albumManagement.index')
+				->withAlbums($Album)
+				->withUser(User::find($Album[0]['user_id']));
 		}
 		
 		/**
@@ -37,7 +56,8 @@
 		 */
 		public function create()
 		{
-			return view('albumManagement.create');
+			return view('albumManagement.create')
+				->withPassword($this->user->randomPassword(5));
 		}
 		
 		/**
@@ -47,12 +67,45 @@
 		public function store(AlbumRequestPost $request)
 		{
 			ini_set("memory_limit", "20000M");
-			$results = $request->input();
-			$results += ['user_id' => 1];//get user id
-			$results += ['photographer_id' => Auth::user()->id]; //get logged in user;
-			//check if album exists - user and same photographer
-			$album = Album::create($results);
+			//get all customers
+			$users = User::all('name')->toArray();
+			//get selected username from form
+			$username = $request->input('password');
+			//make sure username is not duplicate
+			if(in_array($username,$users))
+			{
+				$username = $username . $this->user->randomPassword(10);
+			}
+			//compile customer data
+			$userData = [
+				'name' => $username,
+				'first_name' => $request->input('first_name'),
+				'last_name' => $request->input('first_name'),
+				'email' => $request->input('email'),
+				'password' => Hash::make($request->input('password')),
+			];
 			
+			
+			//create customer
+			$customer = User::create($userData);
+			
+			$role = Role::where('slug', '=', 'customer')->first();
+			
+			$customer->attachRole($role);
+			
+			$this->initiateEmailActivation($customer);
+			
+			$albumData = [
+				'user_id' => Auth::user()->id,
+				'customer_id' => $customer['id'],
+				'name' => $request->input('name'),
+				'description' => $request->input('description'),
+				
+				];
+			//create album
+			$album = Album::create($albumData);
+			
+			//check if album exists - user and same photographer
 			if($request->file('photos'))
 			{
 				foreach($request->file('photos') as $img)
@@ -87,9 +140,17 @@
 		public function show($id)
 		{
 			$album = Album::find($id);
+			$photo = Photo::where('album_id',$album['id'])->first();
+			
+			if(empty($album))
+			{
+				return redirect('albums')->with('error','Album does not exist');
+			}
+			
 			
 			return view('albumManagement.show')
 				->withAlbum($album)
+				->withPhoto($photo)
 				->withUser($album->photographer($id));
 		}
 		

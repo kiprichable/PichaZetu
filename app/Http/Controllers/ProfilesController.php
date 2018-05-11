@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use App\Models\Theme;
 use App\Models\User;
+use App\Models\Plan;
 use App\Notifications\SendGoodbyeEmail;
 use App\Traits\CaptureIpTrait;
 use File;
@@ -15,19 +16,22 @@ use Image;
 use jeremykenedy\Uuid\Uuid;
 use Validator;
 use View;
-
+use Auth;
 class ProfilesController extends Controller
 {
     protected $idMultiKey = '618423'; //int
     protected $seperationKey = '****';
+	protected $plan;
 	
 	/**
 	 * ProfilesController constructor.
-	 *
+	 * @param \App\Models\Plan $plan
 	 */
-    public function __construct()
+    public function __construct(Plan $plan)
     {
         $this->middleware('auth');
+        $this->plan = $plan;
+        
     }
 
     /**
@@ -79,10 +83,12 @@ class ProfilesController extends Controller
         }
 
         $currentTheme = Theme::find($user->profile->theme_id);
+        $plans = $this->plan->getStripePlans();
 
         $data = [
             'user'         => $user,
             'currentTheme' => $currentTheme,
+            'plans' => $plans,
         ];
 		
 
@@ -108,9 +114,16 @@ class ProfilesController extends Controller
                 ->with('error', trans('profile.notYourProfile'))
                 ->with('error_title', trans('profile.notYourProfileTitle'));
         }
-
-        
-      
+	
+		// Get all plans from stripe api
+		$plans = Plan::getStripePlans();
+	
+		// Check is subscribed
+		$is_subscribed = Auth::user()->subscribed('main');
+	
+		// If subscribed get the subscription
+		$subscription = Auth::user()->subscription('main');
+		
         $themes = Theme::where('status', 1)
                         ->orderBy('name', 'asc')
                         ->get();
@@ -121,7 +134,9 @@ class ProfilesController extends Controller
             'user'         => $user,
             'themes'       => $themes,
             'currentTheme' => $currentTheme,
-
+            'plans' => $plans,
+            'is_subscribed' => $is_subscribed,
+            'subscription' => $subscription,
         ];
 
         return view('profiles.edit')->with($data);

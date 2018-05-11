@@ -15,7 +15,7 @@ class Album extends Model
 	
 	public function photographer($id)
 	{
-		return User::where('id',Album::find($id)['photographer_id'])->first();
+		return User::find(Album::find($id)['user_id']);
 	}
 	
 	

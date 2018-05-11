@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use function redirect;
 
 class UserController extends Controller
 {
@@ -23,15 +24,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-	
-		return view('profiles.public')->withUser($user);
-	
-//
-//		if ($user->isAdmin()) {
-//            return view('pages.admin.home');
-//        }
-//
-//        return view('pages.user.home');
+		if(Auth::user()->level() <= 4)
+		{
+		 return  redirect('albums');
+		}
+		else {
+			$user = Auth::user ();
+			
+			return view ('profiles.public')->withUser ($user);
+		}
+		
     }
 }

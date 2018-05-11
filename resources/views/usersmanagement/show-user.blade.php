@@ -20,7 +20,7 @@
         <div class="panel @if ($user->activated == 1) panel-success @else panel-danger @endif">
 
           <div class="panel-heading">
-            <a href="/users/" class="btn btn-primary btn-xs pull-right">
+            <a href="{{URL::to('/users/')}}" class="btn btn-primary btn-xs pull-right">
               <i class="fa fa-fw fa-mail-reply" aria-hidden="true"></i>
               <span class="hidden-xs">{{ trans('usersmanagement.usersBackBtn') }}</span>
             </a>
@@ -49,11 +49,11 @@
                   @if ($user->profile)
                     <div class="text-center text-left-tablet margin-bottom-1">
 
-                      <a href="{{ url('/profile/'.$user->name) }}" class="btn btn-sm btn-info">
+                      <a href="{{ URL::ASSET('/profile/'.$user->name) }}" class="btn btn-sm btn-info">
                         <i class="fa fa-eye fa-fw" aria-hidden="true"></i> <span class="hidden-xs hidden-sm hidden-md"> {{ trans('usersmanagement.viewProfile') }}</span>
                       </a>
 
-                      <a href="/users/{{$user->id}}/edit" class="btn btn-sm btn-warning">
+                      <a href="{{ URL::ASSET('/users/'.$user->id)}}/edit" class="btn btn-sm btn-warning">
                         <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> <span class="hidden-xs hidden-sm hidden-md"> {{ trans('usersmanagement.editUser') }} </span>
                       </a>
 

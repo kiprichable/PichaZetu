@@ -12,26 +12,53 @@
 | Middleware options can be located in `app/Http/Kernel.php`
 |
 */
-
-// Homepage Route
-Route::get('/', 'WelcomeController@welcome')->name('welcome');
-Route::get('/user/{username}', 'WelcomeController@show')->name('welcome');
-Route::post('/contactus/{username}', 'ContactUsController@store');
-Route::resource('contactus', 'ContactUsController');
-Route::resource('cart', 'CartController');
-Route::delete('emptyCart', 'CartController@emptyCart');
-Route::post('switchToWishlist/{id}', 'CartController@switchToWishlist');
-
-Route::resource('wishlist', 'WishlistController');
-Route::delete('emptyWishlist', 'WishlistController@emptyWishlist');
-Route::post('switchToCart/{id}', 'WishlistController@switchToCart');
-
+	Route::get('/home', ['as' => 'public.home',   'uses' => 'UserController@index']);
+// Homepage Route\
+	Route::group(['middleware' => ['activity',]], function () {
+		Route::get ('/', 'WelcomeController@welcome')->name ('welcome');
+	});
+	
+	Route::group(['middleware' => ['activity','auth']], function () {
+	Route::get ('/user/{username}', 'WelcomeController@show')->name ('welcome');
+	Route::post ('/contactus/{username}', 'ContactUsController@store');
+	Route::resource ('contactus', 'ContactUsController');
+	Route::resource ('cart', 'CartController');
+	Route::delete ('emptyCart', 'CartController@emptyCart');
+	Route::post ('switchToWishlist/{id}', 'CartController@switchToWishlist');
+	
+	Route::resource ('wishlist', 'WishlistController');
+	Route::delete ('emptyWishlist', 'WishlistController@emptyWishlist');
+	Route::post ('switchToCart/{id}', 'WishlistController@switchToCart');
+	});
 // Authentication Routes
 Auth::routes();
 
+// Handling Stripe Webhooks
+	Route::post(
+		'stripe/webhook',
+		'\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+	);
 // Public Routes
 Route::group(['middleware' => ['web', 'activity']], function () {
-
+	Route::resource('billing','billingController');
+	
+	Route::get('/plan/{id}', 'PlanController@show')->name('plan');
+	Route::resource('plans', 'PlanController');
+	
+	Route::group(['prefix' => 'subscribe'], function(){
+		
+		Route::post('/', 'PlanController@subscribe')->name('subscribe');
+		Route::get('/cancel', 'PlanController@confirmCancellation')->name('confirmCancellation');
+		Route::post('/cancel', 'PlanController@cancelSubscription')->name('subscriptionCancel');
+		Route::post('/resume', 'PlanController@resumeSubscription')->name('subscriptionResume');
+		
+		Route::get('/invoices', 'InvoiceController@index')->name('invoices');
+		Route::get('/invoice/{id}', 'InvoiceController@download')->name('downloadInvoice');
+		
+	});
+	
+	
+	
     // Activation Routes
     Route::get('/activate', ['as' => 'activate', 'uses' => 'Auth\ActivateController@initial']);
 
@@ -56,10 +83,10 @@ Route::group(['middleware' => ['auth', 'activated', 'activity']], function () {
 });
 
 // Registered and Activated User Routes
-Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep']], function () {
+Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep','level:2']], function () {
 
     //  Homepage Route - Redirect based on user role is in controller.
-    Route::get('/home', ['as' => 'public.home',   'uses' => 'UserController@index']);
+  
 
     // Show users profile - viewable by other users.
     Route::get('profile/{username}', [
@@ -70,16 +97,21 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep']], fun
 	Route::resource('photos', 'photoController');
 	Route::resource('albums', 'albumController',
 		[
-			'only' => ['index','edit','update','create']
+			'only' => ['edit','update','create','store']
 		]
 	);
 });
 
 // Registered, activated, and is current user routes.
-Route::group(['middleware' => ['auth', 'activated', 'currentUser', 'activity', 'twostep']], function () {
+Route::group(['middleware' => ['auth', 'activated', 'currentUser', 'activity', 'twostep','level:3']], function () {
+	//after subscribing return to profile
+	Route::get('profile/{username}', 'ProfilesController@show')->name('profile');
+	
 	//blogs
 	Route::resource('blogs', 'BlogsController');
     // User Profile and Account Routes
+	
+	
     Route::resource(
         'profile',
         'ProfilesController', [
@@ -144,6 +176,12 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
     Route::get('active-users', 'AdminDetailsController@activeUsers');
 });
 
-Route::get('albums/{id}', 'albumController@show');
+//Routes that need not authentication
+	Route::group(['middleware' => ['auth','activity']], function () {
+		Route::get('albums/{id}', 'albumController@show');
+		Route::get('albums', 'albumController@index');
+	});
+	
+
 
 Route::redirect('/php', '/phpinfo', 301);

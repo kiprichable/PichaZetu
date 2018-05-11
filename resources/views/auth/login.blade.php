@@ -63,7 +63,6 @@
                             Or Login with
                         </p>
 
-                        @include('partials.socials-icons')
 
                     </form>
                 </div>

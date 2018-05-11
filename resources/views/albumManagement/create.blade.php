@@ -9,7 +9,44 @@
                     </div>
                     <div class="panel-body">
                        {{Form::open(['url' => 'albums', 'method' => 'POST', 'files' =>  'true'])}}
-                            <div class="row">
+                        <div class="row">
+                            <div>
+                                <h4>Customer Info:</h4>
+                            </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="first_name" value="{{ old('first_name') }}" id="first_name"
+                                       class="form-control input-sm" placeholder="First name">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="last_name" value="{{ old('last_name') }}" id="last_name"
+                                       class="form-control input-sm" placeholder="Last name">
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="email" value="{{ old('email') }}" id="email"
+                                       class="form-control input-sm" placeholder=" Email">
+                            </div>
+                        </div>
+
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="password" value="{{$password}}" id="password"
+                                       class="form-control input-sm" placeholder="Password" readonly>
+                            </div>
+                        </div>
+
+                            <div>
+                                <h4>Album Info:</h4>
+                            </div>
+
+
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <input type="text" name="name" value="{{ old('name') }}" id="name"

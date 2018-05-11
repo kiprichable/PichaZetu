@@ -123,12 +123,14 @@
                                                 {!! Form::close() !!}
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-success btn-block" href="{{ URL::to('users/' . $user->id) }}" data-toggle="tooltip" title="Show">
+                                                <a class="btn btn-sm btn-success btn-block" href="{{ URL::to
+                                                ('/users/' . $user->id) }}" data-toggle="tooltip" title="Show">
                                                     <i class="fa fa-eye fa-fw" aria-hidden="true"></i> <span class="hidden-xs hidden-sm">Show</span><span class="hidden-xs hidden-sm hidden-md"> User</span>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-sm btn-info btn-block" href="{{ URL::to('users/' . $user->id . '/edit') }}" data-toggle="tooltip" title="Edit">
+                                                <a class="btn btn-sm btn-info btn-block" href="{{ URL::to('/users/' .
+                                                 $user->id . '/edit') }}" data-toggle="tooltip" title="Edit">
                                                     <i class="fa fa-pencil fa-fw" aria-hidden="true"></i> <span class="hidden-xs hidden-sm">Edit</span><span class="hidden-xs hidden-sm hidden-md"> User</span>
                                                 </a>
                                             </td>

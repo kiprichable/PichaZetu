@@ -1,12 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Picha sell free registration</div>
                 <div class="panel-body">
 
                     {!! Form::open(['route' => 'register', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'POST'] ) !!}
@@ -14,7 +12,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-sm-4 control-label">Name</label>
+                            <label for="name" class="col-sm-4 control-label">Profile Name</label>
                             <div class="col-sm-6">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Username', 'id' => 'name', 'required', 'autofocus']) !!}
                                 @if ($errors->has('name'))
@@ -87,19 +85,12 @@
                             </div>
                         @endif
                         <div class="form-group margin-bottom-2">
-                            <div class="col-sm-6 col-sm-offset-4">
+                            <div class="col-lg-12 col-sm-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
                             </div>
                         </div>
-
-                        <p class="text-center margin-bottom-2">
-                            Or Use Social Logins to Register
-                        </p>
-
-                        @include('partials.socials')
-
                     {!! Form::close() !!}
 
                 </div>

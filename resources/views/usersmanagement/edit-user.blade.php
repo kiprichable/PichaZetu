@@ -23,12 +23,12 @@
 
             <strong>Editing User:</strong> {{ $user->name }}
 
-            <a href="/users/{{$user->id}}" class="btn btn-primary btn-xs pull-right" style="margin-left: 1em;">
+            <a href="{{ URL::to('/users/'.$user->id)}}" class="btn btn-primary btn-xs pull-right" style="margin-left: 1em;">
               <i class="fa fa-fw fa-mail-reply" aria-hidden="true"></i>
              Back  <span class="hidden-xs">to User</span>
             </a>
 
-            <a href="/users" class="btn btn-info btn-xs pull-right">
+            <a href="{{URL::to('/users/')}}" class="btn btn-info btn-xs pull-right">
               <i class="fa fa-fw fa-mail-reply" aria-hidden="true"></i>
               <span class="hidden-xs">Back to </span>Users
             </a>
