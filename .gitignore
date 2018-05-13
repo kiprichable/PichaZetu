@@ -38,7 +38,8 @@ composer.lock
 ### Assets ###
 /node_modules
 /public/hot
-/public/storage
+/public/OriginalImages/*
+/public/WatermarkedImages/*
 /storage/*.key
 /vendor
 /storage/debugbar
