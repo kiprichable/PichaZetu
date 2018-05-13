@@ -17,6 +17,16 @@ trait ActivationTrait
         $activationRepostory = new ActivationRepository();
         $activationRepostory->createTokenAndSendEmail($user);
     }
+	
+	public function initiateCustomerActivation(User $user)
+	{
+		if (!config('settings.activation') || !$this->validateEmail($user)) {
+			return true;
+		}
+		
+		$activationRepostory = new ActivationRepository();
+		$activationRepostory->createTokenAndSendCustomerEmail($user);
+	}
 
     protected function validateEmail(User $user)
     {

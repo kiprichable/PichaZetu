@@ -80,7 +80,7 @@
 			$userData = [
 				'name' => $username,
 				'first_name' => $request->input('first_name'),
-				'last_name' => $request->input('first_name'),
+				'last_name' => $request->input('last_name'),
 				'email' => $request->input('email'),
 				'password' => Hash::make($request->input('password')),
 			];
@@ -93,8 +93,7 @@
 			
 			$customer->attachRole($role);
 			
-			$this->initiateEmailActivation($customer);
-			
+			$this->initiateCustomerActivation($customer);
 			$albumData = [
 				'user_id' => Auth::user()->id,
 				'customer_id' => $customer['id'],
